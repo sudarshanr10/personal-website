@@ -1,14 +1,7 @@
-import { FaArrowDown, FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
+import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import Terminal from './Terminal'
 
 const Hero = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-500">
       {/* Animated gradient background */}
@@ -38,46 +31,57 @@ const Hero = () => {
         </div>
 
         {/* Contact Buttons Section */}
-        <div className="flex flex-col items-center space-y-8 mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <p className="text-gray-600 dark:text-gray-400 font-mono text-sm tracking-wider">GET IN TOUCH</p>
-          <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-col items-center space-y-8 mb-20 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex justify-center gap-6">
             <a
               href="mailto:sudarshan86.ramesh@gmail.com"
-              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-blue-600 dark:hover:bg-blue-600 hover:border-blue-600 dark:hover:border-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="Email"
+              title="Email"
             >
-              <FaEnvelope className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
-              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">Email</span>
+              <FaEnvelope size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                Email
+              </div>
             </a>
             <a
               href="https://github.com/sudarshanr10"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-900 dark:hover:bg-gray-700 hover:border-gray-900 dark:hover:border-gray-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="GitHub"
+              title="GitHub"
             >
-              <FaGithub className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
-              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">GitHub</span>
+              <FaGithub size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                GitHub
+              </div>
             </a>
             <a
               href="https://www.linkedin.com/in/sudarshan-ramesh-424386204/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-blue-700 dark:hover:bg-blue-700 hover:border-blue-700 dark:hover:border-blue-700 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="LinkedIn"
+              title="LinkedIn"
             >
-              <FaLinkedin className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
-              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">LinkedIn</span>
+              <FaLinkedin size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                LinkedIn
+              </div>
             </a>
             <a
               href="https://www.instagram.com/sudarshanr10/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-pink-600 dark:hover:bg-pink-600 hover:border-pink-600 dark:hover:border-pink-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="Instagram"
+              title="Instagram"
             >
-              <FaInstagram className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
-              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">Instagram</span>
+              <FaInstagram size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                Instagram
+              </div>
             </a>
           </div>
         </div>
@@ -85,20 +89,6 @@ const Hero = () => {
         {/* Terminal Section */}
         <div className="mb-16 animate-fade-in" style={{ animationDelay: '0.5s' }}>
           <Terminal />
-        </div>
-
-        {/* Creative Explore Button */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          <button
-            onClick={() => scrollToSection('about')}
-            className="group relative inline-flex items-center space-x-3 px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-500 dark:via-purple-500 dark:to-pink-500 text-white rounded-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-blue-600 dark:hover:via-purple-600 dark:hover:to-pink-600 transition-all duration-300 font-mono text-sm tracking-wider shadow-2xl hover:shadow-blue-500/50 overflow-hidden transform hover:scale-105 active:scale-95"
-          >
-            <span className="relative z-10 flex items-center space-x-2">
-              <span className="group-hover:translate-x-1 transition-transform duration-300">EXPLORE</span>
-              <FaArrowDown className="group-hover:translate-y-1 transition-all duration-300" size={14} />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-          </button>
         </div>
       </div>
     </section>

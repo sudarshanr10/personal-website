@@ -58,14 +58,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             ))}
             <button
               onClick={toggleTheme}
-              className="relative w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-200 dark:border-gray-700 ml-4"
+              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 hover:from-blue-300 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-300 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-300 dark:border-gray-600 ml-4 shadow-md hover:shadow-xl"
               aria-label="Toggle theme"
             >
               <div className="relative w-6 h-6 flex items-center justify-center">
                 {/* Moon icon - shown in light mode, clicking switches to dark */}
                 <FaMoon 
                   size={18}
-                  className={`absolute transition-all duration-500 ease-in-out text-gray-700 ${
+                  className={`absolute transition-all duration-500 ease-in-out text-gray-700 group-hover:text-gray-900 ${
                     theme === 'light' 
                       ? 'opacity-100 rotate-0 scale-100' 
                       : 'opacity-0 rotate-180 scale-0'
@@ -74,7 +74,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 {/* Sun icon - shown in dark mode, clicking switches to light */}
                 <FaSun 
                   size={18}
-                  className={`absolute transition-all duration-500 ease-in-out text-yellow-500 ${
+                  className={`absolute transition-all duration-500 ease-in-out text-yellow-400 group-hover:text-yellow-300 ${
                     theme === 'dark' 
                       ? 'opacity-100 rotate-0 scale-100' 
                       : 'opacity-0 -rotate-180 scale-0'
@@ -88,14 +88,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           <div className="md:hidden flex items-center space-x-3">
             <button
               onClick={toggleTheme}
-              className="relative w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-200 dark:border-gray-700"
+              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 hover:from-blue-300 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-300 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-300 dark:border-gray-600 shadow-md hover:shadow-xl"
               aria-label="Toggle theme"
             >
               <div className="relative w-6 h-6 flex items-center justify-center">
                 {/* Moon icon - shown in light mode, clicking switches to dark */}
                 <FaMoon 
                   size={20}
-                  className={`absolute transition-all duration-500 ease-in-out text-gray-700 ${
+                  className={`absolute transition-all duration-500 ease-in-out text-gray-700 group-hover:text-gray-900 ${
                     theme === 'light' 
                       ? 'opacity-100 rotate-0 scale-100' 
                       : 'opacity-0 rotate-180 scale-0'
@@ -104,7 +104,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 {/* Sun icon - shown in dark mode, clicking switches to light */}
                 <FaSun 
                   size={20}
-                  className={`absolute transition-all duration-500 ease-in-out text-yellow-500 ${
+                  className={`absolute transition-all duration-500 ease-in-out text-yellow-400 group-hover:text-yellow-300 ${
                     theme === 'dark' 
                       ? 'opacity-100 rotate-0 scale-100' 
                       : 'opacity-0 -rotate-180 scale-0'

@@ -1,4 +1,4 @@
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa'
 import { Project } from '../types'
 
 const Projects = () => {
@@ -102,17 +102,22 @@ const Projects = () => {
                   </div>
 
                   {/* Divider */}
-                  <div className="border-t border-gray-200 dark:border-gray-800 pt-4">
+                  <div className="border-t border-gray-200 dark:border-gray-800 pt-4 flex justify-between items-center">
+                    <div className="flex flex-wrap gap-1">
+                      {project.technologies.slice(0, 2).map((_tech, idx) => (
+                        <div key={idx} className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                      ))}
+                    </div>
                     {project.githubUrl && (
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center space-x-2 bg-gradient-to-r ${project.color} bg-clip-text text-transparent hover:opacity-80 transition-all font-semibold group/link`}
+                        className="group relative w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white hover:shadow-lg transition-all duration-300 transform hover:scale-110 active:scale-95"
+                        aria-label="View on GitHub"
+                        title="View on GitHub"
                       >
-                        <FaGithub className="group-hover/link:scale-110 group-hover/link:rotate-12 transition-transform" size={18} />
-                        <span>View on GitHub</span>
-                        <FaExternalLinkAlt className="group-hover/link:translate-x-1 transition-transform" size={14} />
+                        <FaGithub className="group-hover:scale-125 transition-transform duration-300" size={16} />
                       </a>
                     )}
                   </div>
