@@ -4,12 +4,11 @@ const Experience = () => {
   const experiences: ExperienceType[] = [
     {
       id: 4,
-      company: 'Data Engineering Internship',
+      company: 'Southwest Business Corporation',
       position: 'Data Engineer Intern',
       duration: 'Jun 2025 - Present',
       description: [
-        'Developed 7 anomaly detection pipelines with SQL, Snowflake ML, and CRON, ensuring automated monitoring.',
-        'Built 8 fact tables in Snowflake using dbt, applying ELT and star schema principles to generalize ~40% of the data model.',
+        'Developed anomaly detection pipelines and ELT pipelines for the Insurance data model for the company',
       ],
       technologies: ['SQL', 'Snowflake', 'dbt', 'SQL Server', 'Azure DevOps Server', 'Snowflake ML', 'CRON'],
     },
