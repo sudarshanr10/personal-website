@@ -42,7 +42,7 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="py-32 px-4 bg-white dark:bg-gray-950 transition-colors duration-500 relative overflow-hidden">
+    <section id="projects" className="py-32 px-4 bg-gray-50 dark:bg-gray-900/30 transition-colors duration-500 section-enter relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/3 rounded-full blur-3xl"></div>

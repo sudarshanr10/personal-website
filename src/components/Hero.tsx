@@ -3,7 +3,7 @@ import Terminal from './Terminal'
 
 const Hero = () => {
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-500">
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-gray-50 dark:bg-gray-950 transition-colors duration-500 section-enter">
       {/* Animated gradient background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>

@@ -35,7 +35,7 @@ const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="py-32 px-4 bg-white dark:bg-gray-950 transition-colors duration-500">
+    <section id="experience" className="py-32 px-4 bg-white dark:bg-gray-950 transition-colors duration-500 section-enter">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-20">
           <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400">
@@ -47,7 +47,7 @@ const Experience = () => {
         </div>
 
         <div className="space-y-12">
-          {experiences.map((exp, index) => (
+          {experiences.map((exp) => (
             <div
               key={exp.id}
               className="relative pl-8 border-l-2 border-gray-300 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 transition-all duration-300 group"
