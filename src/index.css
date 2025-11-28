@@ -20,16 +20,16 @@
   
   html.light {
     color-scheme: light;
-    background-color: #ffffff;
+    background-color: #f8f9fa;
   }
   
   html:not(.dark) {
     color-scheme: light;
-    background-color: #ffffff;
+    background-color: #f8f9fa;
   }
   
   body {
-    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50;
+    @apply bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-50;
     font-family: 'Space Grotesk', 'JetBrains Mono', monospace, sans-serif;
     transition: background-color 0.5s ease, color 0.5s ease;
     background-color: inherit;

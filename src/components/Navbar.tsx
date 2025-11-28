@@ -18,10 +18,15 @@ const Navbar = ({ activeSection }: NavbarProps) => {
   ]
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+    if (sectionId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       setIsOpen(false)
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+        setIsOpen(false)
+      }
     }
   }
 

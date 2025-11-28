@@ -35,11 +35,11 @@ const Hero = () => {
           <div className="flex justify-center gap-6">
             <a
               href="mailto:sudarshan86.ramesh@gmail.com"
-              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
+              className="group relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="Email"
               title="Email"
             >
-              <FaEnvelope size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <FaEnvelope size={24} className="group-hover:scale-125 transition-transform duration-300" />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                 Email
               </div>
@@ -48,11 +48,11 @@ const Hero = () => {
               href="https://github.com/sudarshanr10"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
+              className="group relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="GitHub"
               title="GitHub"
             >
-              <FaGithub size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <FaGithub size={24} className="group-hover:scale-125 transition-transform duration-300" />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                 GitHub
               </div>
@@ -61,11 +61,11 @@ const Hero = () => {
               href="https://www.linkedin.com/in/sudarshan-ramesh-424386204/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
+              className="group relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="LinkedIn"
               title="LinkedIn"
             >
-              <FaLinkedin size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <FaLinkedin size={24} className="group-hover:scale-125 transition-transform duration-300" />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                 LinkedIn
               </div>
@@ -74,11 +74,11 @@ const Hero = () => {
               href="https://www.instagram.com/sudarshanr10/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
+              className="group relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 hover:-translate-y-1"
               aria-label="Instagram"
               title="Instagram"
             >
-              <FaInstagram size={20} className="group-hover:scale-125 transition-transform duration-300" />
+              <FaInstagram size={24} className="group-hover:scale-125 transition-transform duration-300" />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-900 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
                 Instagram
               </div>

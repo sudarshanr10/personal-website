@@ -14,6 +14,15 @@ const Projects = () => {
     },
     {
       id: 2,
+      title: 'VINT',
+      description: 'A full-stack personal finance platform using React, FastAPI, and PostgreSQL to track budgeting with multi-account syncing via the Plaid API, supporting real-time transaction data from 10,000+ financial institutions. Features OAuth authorization, JWT session management, and asynchronous SMS alerts using Twilio, Celery, & Redis.',
+      technologies: ['React', 'TailwindCSS', 'FastAPI', 'PostgreSQL', 'Plaid API', 'Twilio', 'Redis', 'Docker'],
+      githubUrl: 'https://github.com/sudarshanr10/VINT',
+      category: 'Full Stack',
+      color: 'from-emerald-500 to-teal-500',
+    },
+    {
+      id: 3,
       title: 'EZSlides',
       description: 'A full-stack AI-powered Speech-to-Slides Presentation application that converts spoken content into professional presentations using cutting-edge AI.',
       technologies: ['HTML', 'CSS', 'JavaScript', 'Python', 'AWS', 'Google Slides API', 'OpenAI API'],
@@ -22,7 +31,7 @@ const Projects = () => {
       color: 'from-purple-500 to-pink-500',
     },
     {
-      id: 3,
+      id: 4,
       title: 'Crime Forecasting System',
       description: 'A data-driven crime forecaster using the Denver Open Data API to process data for hotspot analysis and trend predictions with machine learning.',
       technologies: ['Python', 'NumPy', 'Pandas', 'scikit-learn', 'folium', 'statsmodels', 'SQLite'],
@@ -53,7 +62,7 @@ const Projects = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {projects.map((project, index) => (
             <div
               key={project.id}
