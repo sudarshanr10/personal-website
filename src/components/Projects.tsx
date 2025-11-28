@@ -43,7 +43,7 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-32 px-4 bg-gray-50 dark:bg-gray-900/30 transition-colors duration-500 section-enter relative overflow-hidden">
-      {/* Background decorations */}
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/3 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/5 dark:bg-purple-500/3 rounded-full blur-3xl"></div>
@@ -69,34 +69,34 @@ const Projects = () => {
               className="group relative animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Gradient background card */}
+              
               <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-5 rounded-2xl blur-xl transition-all duration-500`}></div>
               
-              {/* Main card */}
+              
               <div className="relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-2 h-full flex flex-col">
-                {/* Category badge */}
+                
                 <div className={`h-1 bg-gradient-to-r ${project.color}`}></div>
                 
-                {/* Content */}
+                
                 <div className="p-8 flex flex-col flex-grow">
-                  {/* Category tag */}
+                  
                   <div className="mb-4">
                     <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r ${project.color} text-white`}>
                       {project.category}
                     </span>
                   </div>
 
-                  {/* Title */}
+                  
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
                     {project.title}
                   </h3>
 
-                  {/* Description */}
+                  
                   <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed flex-grow">
                     {project.description}
                   </p>
 
-                  {/* Technologies */}
+                  
                   <div className="mb-6">
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, techIndex) => (
@@ -110,7 +110,7 @@ const Projects = () => {
                     </div>
                   </div>
 
-                  {/* Divider */}
+                  
                   <div className="border-t border-gray-200 dark:border-gray-800 pt-4 flex justify-between items-center">
                     <div className="flex flex-wrap gap-1">
                       {project.technologies.slice(0, 2).map((_tech, idx) => (

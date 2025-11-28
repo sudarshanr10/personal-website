@@ -33,7 +33,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-32 px-4 bg-white dark:bg-gray-950 transition-colors duration-500 relative overflow-hidden">
-      {/* Background animations */}
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/3 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/5 dark:bg-purple-500/3 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -51,7 +51,7 @@ const Contact = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Contact Information */}
+          
           <div className="space-y-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div>
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Contact Information</h3>
@@ -93,7 +93,7 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
+          
           <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

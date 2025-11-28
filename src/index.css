@@ -8,38 +8,33 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   * {
-    @apply transition-colors duration-500;
+    @apply transition-colors duration-300;
   }
-  
+
   html.dark {
     color-scheme: dark;
     background-color: #030712;
   }
-  
+
   html.light {
     color-scheme: light;
     background-color: #f8f9fa;
   }
-  
-  html:not(.dark) {
-    color-scheme: light;
-    background-color: #f8f9fa;
-  }
-  
+
   body {
     @apply bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-50;
     font-family: 'Space Grotesk', 'JetBrains Mono', monospace, sans-serif;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: background-color 0.25s linear, color 0.25s linear;
     background-color: inherit;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
   }
-  
+
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
@@ -47,84 +42,62 @@
 
 @layer utilities {
   .theme-transition {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
   }
-  
+
   .glass-effect {
     @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl;
   }
-  
+
   .section-enter {
-    animation: section-fade-in 0.6s ease-out;
+    animation: section-fade-in 0.4s ease-out forwards;
+    will-change: opacity;
+    transform: translateZ(0);
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.45s cubic-bezier(.22,.94,.35,1) forwards;
+    will-change: opacity, transform;
+    transform: translateZ(0);
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.55s cubic-bezier(.22,.94,.35,1) forwards;
+    will-change: opacity, transform;
+    transform: translateZ(0);
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
   }
 }
 
 @keyframes section-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px) translateZ(0); }
+  to { opacity: 1; transform: translateY(0) translateZ(0); }
 }
 
 @keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px) translateZ(0); }
+  to { opacity: 1; transform: translateY(0) translateZ(0); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out;
-}
+.terminal-scrollbar::-webkit-scrollbar { width: 8px; }
+.terminal-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.terminal-scrollbar::-webkit-scrollbar-thumb { background: #4B5563; border-radius: 4px; }
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover { background: #6B7280; }
 
-.animate-slide-up {
-  animation: slide-up 0.8s ease-out;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-1000 {
-  animation-delay: 1s;
-}
-
-/* Custom Scrollbar for Terminal */
-.terminal-scrollbar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.terminal-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.terminal-scrollbar::-webkit-scrollbar-thumb {
-  background: #4B5563;
-  border-radius: 4px;
-}
-
-.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #6B7280;
-}
 

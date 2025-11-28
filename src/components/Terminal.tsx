@@ -173,8 +173,7 @@ LIBRARIES & FRAMEWORKS:
 
   return (
     <div className="w-full max-w-5xl mx-auto bg-gray-900 dark:bg-gray-950 rounded-2xl border border-gray-800 dark:border-gray-700 shadow-2xl overflow-hidden backdrop-blur-xl">
-      {/* Terminal Header */}
-      <div className="flex items-center justify-between px-6 py-4 bg-gray-800/50 dark:bg-gray-900/50 border-b border-gray-700/50 dark:border-gray-800/50 backdrop-blur-sm">
+  <div className="flex items-center justify-between px-6 py-4 bg-gray-800/50 dark:bg-gray-900/50 border-b border-gray-700/50 dark:border-gray-800/50 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
           <FaTerminal className="text-green-400" size={18} />
           <span className="text-gray-300 dark:text-gray-400 font-mono text-sm font-medium">terminal</span>
@@ -187,7 +186,6 @@ LIBRARIES & FRAMEWORKS:
         </div>
       </div>
 
-      {/* Terminal Body */}
       <div 
         ref={terminalRef}
         className="h-[380px] overflow-y-auto p-6 font-mono text-sm bg-gray-900 dark:bg-gray-950 terminal-scrollbar"

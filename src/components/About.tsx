@@ -22,8 +22,7 @@ const About = () => {
           </p>
         </div>
 
-        {/* Education Section */}
-        <div className="max-w-4xl mx-auto">
+  <div className="max-w-4xl mx-auto">
           <div className="flex items-center mb-8 group">
             <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">
               <FaGraduationCap className="text-white" size={28} />
