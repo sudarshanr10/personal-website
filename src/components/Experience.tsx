@@ -3,14 +3,25 @@ import { Experience as ExperienceType } from '../types'
 const Experience = () => {
   const experiences: ExperienceType[] = [
     {
+      id: 4,
+      company: 'Data Engineering Internship',
+      position: 'Data Engineer Intern',
+      duration: 'Jun 2025 - Present',
+      description: [
+        'Developed 7 anomaly detection pipelines with SQL, Snowflake ML, and CRON, ensuring automated monitoring.',
+        'Built 8 fact tables in Snowflake using dbt, applying ELT and star schema principles to generalize ~40% of the data model.',
+      ],
+      technologies: ['SQL', 'Snowflake', 'dbt', 'SQL Server', 'Azure DevOps Server', 'Snowflake ML', 'CRON'],
+    },
+    {
       id: 1,
       company: 'Ephanti',
-      position: 'Software Engineering Intern',
+      position: 'Software Engineer Intern',
       duration: 'Jun 2024 - Aug 2024',
       description: [
-        'Developed a coding agent for an omnichannel chatbot for the company\'s web platform, enhancing customer interaction and support capabilities',
+        "Developed a coding agent for an omnichannel chatbot for the company's web platform, enhancing customer interaction and support capabilities",
       ],
-      technologies: ['Python', 'PostgreSQL', 'Docker'],
+      technologies: ['Python', 'PostgreSQL', 'Docker', 'Postman', 'OpenAI API', 'PGVector', 'DBeaver', 'LlamaIndex', 'Jira'],
     },
     {
       id: 2,
@@ -25,12 +36,12 @@ const Experience = () => {
     {
       id: 3,
       company: 'Traform',
-      position: 'Software Engineering Intern',
+      position: 'Software Engineer Intern',
       duration: 'Jul 2021 - Dec 2021',
       description: [
         'Optimized mobile UIs for a corporate travel platform using React Native, improving user experience and application performance',
       ],
-      technologies: ['React Native'],
+      technologies: ['JavaScript', 'React Native', 'TailwindCSS'],
     },
   ]
 
@@ -64,9 +75,11 @@ const Experience = () => {
                     <p className="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 md:mt-0">{exp.duration}</p>
                 </div>
 
-                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-lg">
-                  {exp.description[0]}
-                </p>
+                <div className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-lg space-y-3">
+                  {exp.description.map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
 
                 <div className="flex flex-wrap gap-2">
                   {exp.technologies.map((tech, idx) => (
