@@ -32,7 +32,7 @@ export default function MotionSection({ children, className = '', threshold = 0.
 
   const variants = {
     hidden: { opacity: 0, y: 18, scale: 0.995 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.2, 0.8, 0.2, 1], delay } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, delay } },
     exit: { opacity: 0, y: -8, transition: { duration: 0.35 } },
   }
 
