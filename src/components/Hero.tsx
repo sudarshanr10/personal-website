@@ -37,13 +37,8 @@ const Hero = () => {
           </h2>
         </div>
 
-        {/* Terminal Section */}
-        <div className="mb-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <Terminal />
-        </div>
-
         {/* Contact Buttons Section */}
-        <div className="flex flex-col items-center space-y-8 mb-12 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+        <div className="flex flex-col items-center space-y-8 mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
           <p className="text-gray-600 dark:text-gray-400 font-mono text-sm tracking-wider">GET IN TOUCH</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -87,8 +82,13 @@ const Hero = () => {
           </div>
         </div>
 
+        {/* Terminal Section */}
+        <div className="mb-16 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <Terminal />
+        </div>
+
         {/* Creative Explore Button */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
+        <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
           <button
             onClick={() => scrollToSection('about')}
             className="group relative inline-flex items-center space-x-3 px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-500 dark:via-purple-500 dark:to-pink-500 text-white rounded-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-blue-600 dark:hover:via-purple-600 dark:hover:to-pink-600 transition-all duration-300 font-mono text-sm tracking-wider shadow-2xl hover:shadow-blue-500/50 overflow-hidden transform hover:scale-105 active:scale-95"
