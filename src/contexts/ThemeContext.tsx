@@ -22,7 +22,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         return 'dark'
       }
     }
-    return 'light'
+    return 'dark' // Default to dark mode
   })
 
   // Initialize theme on mount
