@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
+import MotionSection from './components/MotionSection'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -34,10 +35,18 @@ function App() {
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-500">
       <Navbar activeSection={activeSection} />
       <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
+        <MotionSection>
+          <Hero />
+        </MotionSection>
+        <MotionSection>
+          <About />
+        </MotionSection>
+        <MotionSection>
+          <Experience />
+        </MotionSection>
+        <MotionSection>
+          <Projects />
+        </MotionSection>
       </main>
     </div>
   )
