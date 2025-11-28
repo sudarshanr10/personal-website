@@ -1,4 +1,4 @@
-import { FaArrowDown } from 'react-icons/fa'
+import { FaArrowDown, FaEnvelope, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import Terminal from './Terminal'
 
 const Hero = () => {
@@ -42,8 +42,53 @@ const Hero = () => {
           <Terminal />
         </div>
 
+        {/* Contact Buttons Section */}
+        <div className="flex flex-col items-center space-y-8 mb-12 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <p className="text-gray-600 dark:text-gray-400 font-mono text-sm tracking-wider">GET IN TOUCH</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="mailto:sudarshan86.ramesh@gmail.com"
+              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-blue-600 dark:hover:bg-blue-600 hover:border-blue-600 dark:hover:border-blue-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              aria-label="Email"
+            >
+              <FaEnvelope className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
+              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">Email</span>
+            </a>
+            <a
+              href="https://github.com/sudarshanr10"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-900 dark:hover:bg-gray-700 hover:border-gray-900 dark:hover:border-gray-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              aria-label="GitHub"
+            >
+              <FaGithub className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
+              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/sudarshan-ramesh-424386204/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-blue-700 dark:hover:bg-blue-700 hover:border-blue-700 dark:hover:border-blue-700 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
+              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">LinkedIn</span>
+            </a>
+            <a
+              href="https://www.instagram.com/sudarshanr10/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center space-x-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-pink-600 dark:hover:bg-pink-600 hover:border-pink-600 dark:hover:border-pink-600 hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+              aria-label="Instagram"
+            >
+              <FaInstagram className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" size={18} />
+              <span className="text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors font-medium hidden sm:inline">Instagram</span>
+            </a>
+          </div>
+        </div>
+
         {/* Creative Explore Button */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
+        <div className="text-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <button
             onClick={() => scrollToSection('about')}
             className="group relative inline-flex items-center space-x-3 px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-500 dark:via-purple-500 dark:to-pink-500 text-white rounded-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-blue-600 dark:hover:via-purple-600 dark:hover:to-pink-600 transition-all duration-300 font-mono text-sm tracking-wider shadow-2xl hover:shadow-blue-500/50 overflow-hidden transform hover:scale-105 active:scale-95"

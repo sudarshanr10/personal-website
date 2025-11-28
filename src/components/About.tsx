@@ -15,10 +15,10 @@ const About = () => {
 
         <div className="mb-16 max-w-3xl mx-auto text-center">
           <p className="text-xl text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-            I'm a passionate software developer with expertise in building scalable web applications and solving complex problems. With a strong foundation in computer science and years of hands-on experience, I create efficient, maintainable, and user-friendly solutions.
+            I'm a full stack developer who enjoys creating useful and reliable applications. I like working on both the frontend and backend and I'm always looking for ways to improve the way things are built.
           </p>
           <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-            When I'm not coding, you can find me contributing to open-source projects, learning new technologies, or sharing my knowledge through technical writing.
+            Outside of coding, I enjoy watching and playing soccer, gaming, cooking, working out, and watching anime. I believe in continuous learning and building solutions that make a real impact.
           </p>
         </div>
 
