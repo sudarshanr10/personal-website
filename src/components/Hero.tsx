@@ -1,0 +1,64 @@
+import { FaArrowDown } from 'react-icons/fa'
+import Terminal from './Terminal'
+
+const Hero = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  return (
+    <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-white dark:bg-gray-950 transition-colors duration-500">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      </div>
+
+      {/* Minimal grid pattern */}
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none" style={{
+        backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+        backgroundSize: '50px 50px'
+      }}></div>
+      
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        {/* Top Section - Name and Title */}
+        <div className="text-center mb-10 animate-fade-in">
+          <div className="inline-block mb-6 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-105">
+            &lt;developer /&gt;
+          </div>
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold mb-6 text-gray-900 dark:text-white tracking-tighter animate-slide-up">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-500">Sudarshan</span>
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-mono text-gray-500 dark:text-gray-400 mb-8 tracking-wider animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            SOFTWARE_DEVELOPER
+          </h2>
+        </div>
+
+        {/* Terminal Section */}
+        <div className="mb-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <Terminal />
+        </div>
+
+        {/* Creative Explore Button */}
+        <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <button
+            onClick={() => scrollToSection('about')}
+            className="group relative inline-flex items-center space-x-3 px-10 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-500 dark:via-purple-500 dark:to-pink-500 text-white rounded-full hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 dark:hover:from-blue-600 dark:hover:via-purple-600 dark:hover:to-pink-600 transition-all duration-300 font-mono text-sm tracking-wider shadow-2xl hover:shadow-blue-500/50 overflow-hidden transform hover:scale-105 active:scale-95"
+          >
+            <span className="relative z-10 flex items-center space-x-2">
+              <span className="group-hover:translate-x-1 transition-transform duration-300">EXPLORE</span>
+              <FaArrowDown className="group-hover:translate-y-1 transition-all duration-300" size={14} />
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+          </button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Hero
+
