@@ -20,7 +20,6 @@ const Terminal = () => {
   about       - Learn about me
   experience  - View my work experience
   projects    - See my projects
-  education   - View my education
   skills      - Check my technical skills
   contact     - Get contact information
   clear       - Clear the terminal
@@ -34,9 +33,16 @@ const Terminal = () => {
         return helpText
       
       case 'about':
-        return `I'm a passionate software developer with expertise in building scalable web applications 
-and solving complex problems. With a strong foundation in computer science and years of 
-hands-on experience, I create efficient, maintainable, and user-friendly solutions.`
+        return `I'm a full stack developer who enjoys creating useful and reliable applications. 
+I like working on both the frontend and backend and I'm always looking for ways to 
+improve the way things are built.
+
+Outside of coding, I enjoy:
+  • Watching and playing soccer ⚽
+  • Gaming 🎮
+  • Cooking 🍳
+  • Working out 💪
+  • Watching anime 🎌`
       
       case 'experience':
         return `Software Engineering Intern @ Ephanti (Jun 2024 - Aug 2024)
@@ -49,11 +55,28 @@ Software Engineering Intern @ Traform (Jul 2021 - Dec 2021)
 - Optimized mobile UIs for a corporate travel platform`
       
       case 'projects':
-        return `Personal Website - A responsive portfolio website
-EZSlides - AI-powered Speech-to-Slides application
-Crime Forecasting System - Data-driven crime forecaster
+        return `FULL STACK PROJECTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VINT
+    Full-stack personal finance platform for budget tracking
+    Tech: React, TailwindCSS, FastAPI, PostgreSQL
+    Features: Plaid API, OAuth, JWT, Twilio alerts, Docker
 
-Type "projects" in the navigation to see more details.`
+  ezslides
+    AI-powered Speech-to-Slides Presentation application
+    Tech: HTML, CSS, JavaScript, Python, AWS, Google Slides API, OpenAI
+
+FRONTEND PROJECTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Personal Website
+    Responsive portfolio built with React & TailwindCSS
+    Tech: React, TypeScript, Tailwind CSS, Vite
+
+DATA SCIENCE PROJECTS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Crime Forecasting System
+    Data-driven crime forecaster using Denver Open Data API
+    Tech: Python, NumPy, Pandas, scikit-learn, folium, statsmodels, SQLite`
       
       case 'education':
         return `Bachelor of Science in Computer Science
@@ -65,15 +88,26 @@ South Brunswick High School
 2018 - 2022`
       
       case 'skills':
-        return `Languages: Java, Python, C#, C++, JavaScript, HTML, CSS, SQL, R
-DevOps: Git, Docker, Kubernetes, Linux, Postman, PostgreSQL, Jenkins
-Frameworks: React Native, Flask, NumPy, Pandas, TensorFlow, Keras, scikit-learn`
+        return `LANGUAGES:
+  Java, Python, C#, C++, JavaScript, TypeScript, HTML, CSS, SQL, R
+
+FRONTEND:
+  React, React Native, TailwindCSS, D3.js
+
+BACKEND:
+  FastAPI, Flask, Node.js, PostgreSQL, Redis
+
+DEVOPS & TOOLS:
+  Git, Docker, Kubernetes, Linux, Postman, Jenkins
+
+LIBRARIES & FRAMEWORKS:
+  NumPy, Pandas, TensorFlow, Keras, scikit-learn`
       
       case 'contact':
-        return `Email: sudarshan86.ramesh@gmail.com
-GitHub: github.com/sudarshanr10
-LinkedIn: linkedin.com/in/sudarshan-ramesh-424386204
-Instagram: instagram.com/sudarshanr10`
+        return `📧 Email:    sudarshan86.ramesh@gmail.com
+🐙 GitHub:   github.com/sudarshanr10
+💼 LinkedIn: linkedin.com/in/sudarshan-ramesh-424386204
+📸 Instagram: instagram.com/sudarshanr10`
       
       case 'clear':
         setCommands([])
@@ -97,6 +131,8 @@ Instagram: instagram.com/sudarshanr10`
       setCommands(prev => [...prev, { input: currentInput, output }])
       setCommandHistory(prev => [...prev, currentInput])
       setHistoryIndex(-1)
+    } else {
+      setCommands([])
     }
     
     setCurrentInput('')
