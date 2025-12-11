@@ -71,7 +71,7 @@ const Contact = () => {
             You can find me on
           </h3>
           <div className="flex justify-center flex-wrap gap-4 md:gap-6">
-            {socialLinks.map((social, index) => {
+            {socialLinks.map((social) => {
               const Icon = social.icon
               return (
                 <a
