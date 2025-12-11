@@ -1,64 +1,52 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa'
 import { useTheme } from '../contexts/ThemeContext'
 
-interface NavbarProps {
-  activeSection: string
-}
-
-const Navbar = ({ activeSection }: NavbarProps) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
+  const location = useLocation()
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'home', path: '/', label: 'Home' },
+    { id: 'about', path: '/about', label: 'About' },
+    { id: 'experience', path: '/experience', label: 'Experience' },
+    { id: 'projects', path: '/projects', label: 'Projects' },
+    { id: 'contact', path: '/contact', label: 'Contact' },
   ]
 
-  const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      setIsOpen(false)
-    } else {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-        setIsOpen(false)
-      }
-    }
-  }
+  const isActive = (path: string) => location.pathname === path
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 transition-all duration-300 shadow-sm hover:shadow-md">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0">
-            <button
-              onClick={() => scrollToSection('home')}
+            <Link
+              to="/"
               className="text-lg font-mono font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 tracking-wider hover:scale-105 active:scale-95"
             >
               {'<SR />'}
-            </button>
+            </Link>
           </div>
 
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                to={item.path}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative group ${
-                  activeSection === item.id
+                  isActive(item.path)
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
                     : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
                 }`}
               >
                 {item.label}
                 <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 transition-all duration-200 ${
-                  activeSection === item.id ? 'w-full' : 'w-0 group-hover:w-full'
+                  isActive(item.path) ? 'w-full' : 'w-0 group-hover:w-full'
                 }`}></span>
-              </button>
+              </Link>
             ))}
             <button
               onClick={toggleTheme}
@@ -125,17 +113,18 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <div className="md:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                to={item.path}
+                onClick={() => setIsOpen(false)}
                 className={`block w-full text-left px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                  activeSection === item.id
+                  isActive(item.path)
                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
                     : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </div>
         </div>

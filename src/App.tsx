@@ -1,54 +1,82 @@
-import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
-import MotionSection from './components/MotionSection'
+import Contact from './components/Contact'
+import PageTransition from './components/PageTransition'
 
-function App() {
-  const [activeSection, setActiveSection] = useState('home')
-
-  useEffect(() => {
-    const sections = ['home', 'about', 'experience', 'projects']
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id') || 'home'
-            setActiveSection(id)
-          }
-        })
-      },
-      { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 }
-    )
-
-    sections.forEach(id => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-
-    return () => observer.disconnect()
-  }, [])
+function AppRoutes() {
+  const location = useLocation()
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-500">
-      <Navbar activeSection={activeSection} />
-      <main>
-        <MotionSection>
-          <Hero />
-        </MotionSection>
-        <MotionSection>
-          <About />
-        </MotionSection>
-        <MotionSection>
-          <Experience />
-        </MotionSection>
-        <MotionSection>
-          <Projects />
-        </MotionSection>
-      </main>
+      <Navbar />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <PageTransition>
+                <div className="min-h-screen">
+                  <Hero />
+                </div>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <PageTransition>
+                <div className="min-h-screen pt-20">
+                  <About />
+                </div>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/experience"
+            element={
+              <PageTransition>
+                <div className="min-h-screen pt-20">
+                  <Experience />
+                </div>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <PageTransition>
+                <div className="min-h-screen pt-20">
+                  <Projects />
+                </div>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PageTransition>
+                <div className="min-h-screen pt-20">
+                  <Contact />
+                </div>
+              </PageTransition>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
   )
 }
 

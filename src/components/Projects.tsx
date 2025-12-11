@@ -42,14 +42,14 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="py-32 px-4 bg-gray-50 dark:bg-gray-900/30 transition-colors duration-500 section-enter relative overflow-hidden">
+    <section className="py-32 px-4 bg-gray-50 dark:bg-gray-900/30 transition-colors duration-500 min-h-screen flex items-center relative overflow-hidden">
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/3 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/5 dark:bg-purple-500/3 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 w-full">
         <div className="text-center mb-20 animate-fade-in">
           <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400 hover:scale-105 transition-transform">
             PROJECTS

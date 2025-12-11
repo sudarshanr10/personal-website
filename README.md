@@ -88,3 +88,7 @@ The project uses Tailwind CSS. You can customize colors and styles in `tailwind.
 
 MIT
 
+
+
+
+

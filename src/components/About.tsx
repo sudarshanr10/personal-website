@@ -2,8 +2,8 @@ import { FaGraduationCap } from 'react-icons/fa'
 
 const About = () => {
   return (
-    <section id="about" className="py-32 px-4 bg-gray-50 dark:bg-gray-950/50 transition-colors duration-500 section-enter">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-32 px-4 bg-gray-50 dark:bg-gray-950/50 transition-colors duration-500 min-h-screen flex items-center">
+      <div className="max-w-5xl mx-auto w-full">
         <div className="text-center mb-20">
           <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400">
             ABOUT
