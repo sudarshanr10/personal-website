@@ -3,9 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
-import Experience from './components/Experience'
 import Projects from './components/Projects'
-import Contact from './components/Contact'
 import PageTransition from './components/PageTransition'
 
 function AppRoutes() {
@@ -37,31 +35,11 @@ function AppRoutes() {
             }
           />
           <Route
-            path="/experience"
-            element={
-              <PageTransition>
-                <div className="min-h-screen pt-20">
-                  <Experience />
-                </div>
-              </PageTransition>
-            }
-          />
-          <Route
             path="/projects"
             element={
               <PageTransition>
                 <div className="min-h-screen pt-20">
                   <Projects />
-                </div>
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <PageTransition>
-                <div className="min-h-screen pt-20">
-                  <Contact />
                 </div>
               </PageTransition>
             }

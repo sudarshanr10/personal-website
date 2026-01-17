@@ -2,21 +2,81 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa'
 import { useTheme } from '../contexts/ThemeContext'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const ThemeToggle = ({ size = 18 }: { size?: number }) => {
+  const { theme, toggleTheme } = useTheme()
+
+  return (
+    <motion.button
+      onClick={toggleTheme}
+      className="relative w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Toggle theme"
+    >
+      <AnimatePresence mode="wait">
+        {theme === 'light' ? (
+          <motion.div
+            key="moon"
+            initial={{ y: -30, opacity: 0, rotate: -90 }}
+            animate={{ y: 0, opacity: 1, rotate: 0 }}
+            exit={{ y: 30, opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="absolute"
+          >
+            <FaMoon size={size} className="text-gray-700 dark:text-gray-300" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="sun"
+            initial={{ y: -30, opacity: 0, rotate: -90 }}
+            animate={{ y: 0, opacity: 1, rotate: 0 }}
+            exit={{ y: 30, opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="absolute"
+          >
+            <FaSun size={size} className="text-yellow-500" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.button>
+  )
+}
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
   const navItems = [
     { id: 'home', path: '/', label: 'Home' },
     { id: 'about', path: '/about', label: 'About' },
-    { id: 'experience', path: '/experience', label: 'Experience' },
     { id: 'projects', path: '/projects', label: 'Projects' },
-    { id: 'contact', path: '/contact', label: 'Contact' },
   ]
 
   const isActive = (path: string) => location.pathname === path
+
+  const menuVariants = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+      transition: { duration: 0.25, ease: 'easeInOut' as const }
+    },
+    visible: {
+      height: 'auto',
+      opacity: 1,
+      transition: { duration: 0.3, ease: 'easeOut' as const }
+    },
+  }
+
+  const itemVariants = {
+    hidden: { x: -20, opacity: 0 },
+    visible: (i: number) => ({
+      x: 0,
+      opacity: 1,
+      transition: { delay: i * 0.05, type: 'spring' as const, stiffness: 200 },
+    }),
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 transition-all duration-300 shadow-sm hover:shadow-md">
@@ -48,90 +108,65 @@ const Navbar = () => {
                 }`}></span>
               </Link>
             ))}
-            <button
-              onClick={toggleTheme}
-              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 hover:from-blue-300 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-200 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-300 dark:border-gray-600 ml-4 shadow-md hover:shadow-xl"
-              aria-label="Toggle theme"
-            >
-              <div className="relative w-6 h-6 flex items-center justify-center">
-                <FaMoon
-                  size={18}
-                  className={`absolute transition-all duration-200 ease-in-out text-gray-700 group-hover:text-gray-900 ${
-                    theme === 'light'
-                      ? 'opacity-100 rotate-0 scale-100'
-                      : 'opacity-0 rotate-180 scale-0'
-                  }`}
-                />
-                <FaSun
-                  size={18}
-                  className={`absolute transition-all duration-200 ease-in-out text-yellow-400 group-hover:text-yellow-300 ${
-                    theme === 'dark'
-                      ? 'opacity-100 rotate-0 scale-100'
-                      : 'opacity-0 -rotate-180 scale-0'
-                  }`}
-                />
-              </div>
-            </button>
+            <div className="ml-4">
+              <ThemeToggle size={18} />
+            </div>
           </div>
 
           <div className="md:hidden flex items-center space-x-3">
-            <button
-              onClick={toggleTheme}
-              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 hover:from-blue-300 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all duration-200 hover:scale-110 active:scale-95 group flex items-center justify-center border border-gray-300 dark:border-gray-600 shadow-md hover:shadow-xl"
-              aria-label="Toggle theme"
-            >
-              <div className="relative w-6 h-6 flex items-center justify-center">
-                <FaMoon
-                  size={20}
-                  className={`absolute transition-all duration-200 ease-in-out text-gray-700 group-hover:text-gray-900 ${
-                    theme === 'light'
-                      ? 'opacity-100 rotate-0 scale-100'
-                      : 'opacity-0 rotate-180 scale-0'
-                  }`}
-                />
-                <FaSun
-                  size={20}
-                  className={`absolute transition-all duration-200 ease-in-out text-yellow-400 group-hover:text-yellow-300 ${
-                    theme === 'dark'
-                      ? 'opacity-100 rotate-0 scale-100'
-                      : 'opacity-0 -rotate-180 scale-0'
-                  }`}
-                />
-              </div>
-            </button>
+            <ThemeToggle size={20} />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition-colors"
             >
-              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              <motion.div
+                animate={{ rotate: isOpen ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              </motion.div>
             </button>
           </div>
         </div>
       </div>
 
-      {isOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 transition-colors">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className={`block w-full text-left px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                  isActive(item.path)
-                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="md:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 overflow-hidden"
+            variants={menuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  custom={index}
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <Link
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block w-full text-left px-3 py-2 rounded-lg text-base font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }
 
 export default Navbar
-
