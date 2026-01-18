@@ -31,17 +31,16 @@ const Terminal = () => {
 I love building things that work and solve real problems.
 I'm particularly interested in:
   → Backend development
-  → Data engineering
-  → Building reliable systems
+  → Machine learning
 
 When I'm not coding, you'll find me:
-  ⚽ Playing soccer
-  🎮 Gaming
-  🍳 Cooking
-  💪 At the gym
-  📺 Watching anime`
+  → Playing soccer
+  → Gaming
+  → Cooking
+  → At the gym
+  → Watching anime`
 
-  const experienceText = `Data Engineer Intern @ Southwest Business Corporation
+  const experienceText = `Data Engineer Intern @ SWBC
 Jun 2025 - Present
   → EDW-Infra team: ELT pipelines & anomaly detection
 

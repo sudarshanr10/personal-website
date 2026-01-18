@@ -90,10 +90,10 @@ const About = () => {
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    Bachelor of Science in Computer Science
+                    Rutgers, The State University of New Jersey - New Brunswick
                   </h4>
                   <p className="text-blue-600 dark:text-blue-400 font-medium text-lg">
-                    Rutgers, The State University of New Jersey - New Brunswick
+                    Bachelor of Science in Computer Science
                   </p>
                 </div>
                 <div className="mt-2 md:mt-0 md:text-right">
@@ -129,10 +129,10 @@ const About = () => {
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    High School Diploma
+                    South Brunswick High School
                   </h4>
                   <p className="text-blue-600 dark:text-blue-400 font-medium text-lg">
-                    South Brunswick High School
+                    High School Diploma
                   </p>
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 md:mt-0">2018 - 2022</p>
@@ -183,7 +183,7 @@ const About = () => {
           >
             {[
               {
-                company: 'Southwest Business Corporation',
+                company: 'SWBC',
                 position: 'Data Engineer Intern',
                 duration: 'Jun 2025 - Present',
                 description: 'EDW-Infra team: ELT pipelines & anomaly detection',
@@ -219,10 +219,10 @@ const About = () => {
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between">
                   <div className="flex-1">
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                      {exp.position}
+                      {exp.company}
                     </h4>
                     <p className="text-green-600 dark:text-green-400 font-medium">
-                      {exp.company}
+                      {exp.position}
                     </p>
                     <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">
                       {exp.description}
