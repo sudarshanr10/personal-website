@@ -40,6 +40,15 @@ const Projects = () => {
       category: 'Data Science',
       color: 'from-orange-500 to-red-500',
     },
+    {
+      id: 5,
+      title: 'Insta Analyzer',
+      description: 'A privacy-focused Chrome extension that analyzes Instagram follower relationships locally, identifying mutual connections, devoted fans, and non-reciprocal followers with a React dashboard.',
+      technologies: ['React', 'JavaScript', 'Chrome Extension', 'GraphQL', 'CSS'],
+      githubUrl: 'https://github.com/sudarshanr10/instaanalyzer',
+      category: 'Frontend',
+      color: 'from-pink-500 to-rose-500',
+    },
   ]
 
   const containerVariants = {
@@ -89,7 +98,7 @@ const Projects = () => {
 
         {/* Project Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
