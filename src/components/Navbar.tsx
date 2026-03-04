@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa'
+import { useEffect } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { useTheme } from '../contexts/ThemeContext'
 import { motion, AnimatePresence } from 'framer-motion'
+import PillNav from './PillNav'
 
-const ThemeToggle = ({ size = 18 }: { size?: number }) => {
+const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme()
 
   return (
     <motion.button
       onClick={toggleTheme}
-      className="relative w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center overflow-hidden"
+      className="relative w-[42px] h-[42px] rounded-full flex items-center justify-center overflow-hidden"
+      style={{ background: theme === 'light' ? '#111827' : '#f9fafb' }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label="Toggle theme"
@@ -19,24 +20,24 @@ const ThemeToggle = ({ size = 18 }: { size?: number }) => {
         {theme === 'light' ? (
           <motion.div
             key="moon"
-            initial={{ y: -30, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: 30, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="absolute"
           >
-            <FaMoon size={size} className="text-gray-700 dark:text-gray-300" />
+            <FaMoon size={16} className="text-white" />
           </motion.div>
         ) : (
           <motion.div
             key="sun"
-            initial={{ y: -30, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: 30, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="absolute"
           >
-            <FaSun size={size} className="text-yellow-500" />
+            <FaSun size={16} className="text-gray-900" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -45,127 +46,62 @@ const ThemeToggle = ({ size = 18 }: { size?: number }) => {
 }
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const location = useLocation()
+  const { theme } = useTheme()
 
   const navItems = [
-    { id: 'home', path: '/', label: 'Home' },
-    { id: 'about', path: '/about', label: 'About' },
-    { id: 'projects', path: '/projects', label: 'Projects' },
+    { href: '#home', label: 'Home' },
+    { href: '#about', label: 'About' },
+    { href: '#projects', label: 'Projects' },
   ]
 
-  const isActive = (path: string) => location.pathname === path
+  const isLight = theme === 'light'
 
-  const menuVariants = {
-    hidden: {
-      height: 0,
-      opacity: 0,
-      transition: { duration: 0.25, ease: 'easeInOut' as const }
-    },
-    visible: {
-      height: 'auto',
-      opacity: 1,
-      transition: { duration: 0.3, ease: 'easeOut' as const }
-    },
-  }
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a[href^="#"]')
+      if (!anchor) return
 
-  const itemVariants = {
-    hidden: { x: -20, opacity: 0 },
-    visible: (i: number) => ({
-      x: 0,
-      opacity: 1,
-      transition: { delay: i * 0.05, type: 'spring' as const, stiffness: 200 },
-    }),
-  }
+      const href = anchor.getAttribute('href')
+      if (!href || href === '#') return
+
+      e.preventDefault()
+      const sectionId = href.replace('#', '')
+      const element = document.querySelector(`[data-section="${sectionId}"]`)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+
+    document.addEventListener('click', handleAnchorClick)
+    return () => document.removeEventListener('click', handleAnchorClick)
+  }, [])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 transition-all duration-300 shadow-sm hover:shadow-md">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex-shrink-0">
-            <Link
-              to="/"
-              className="text-lg font-mono font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 tracking-wider hover:scale-105 active:scale-95"
-            >
-              {'<SR />'}
-            </Link>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative group ${
-                  isActive(item.path)
-                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-                }`}
-              >
-                {item.label}
-                <span className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 transition-all duration-200 ${
-                  isActive(item.path) ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}></span>
-              </Link>
-            ))}
-            <div className="ml-4">
-              <ThemeToggle size={18} />
-            </div>
-          </div>
-
-          <div className="md:hidden flex items-center space-x-3">
-            <ThemeToggle size={20} />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition-colors"
-            >
-              <motion.div
-                animate={{ rotate: isOpen ? 90 : 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-              </motion.div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="md:hidden bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 overflow-hidden"
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  custom={index}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <Link
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`block w-full text-left px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                      isActive(item.path)
-                        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+    <PillNav
+      logoNode={
+        <motion.span
+          style={{ fontFamily: 'monospace', fontWeight: 800, fontSize: '13px', letterSpacing: '-0.5px' }}
+          whileHover={{ scale: 1.08 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+        >
+          <span style={{
+            background: 'linear-gradient(135deg, #6366f1, #a855f7, #ec4899)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>
+            {'<SR/>'}
+          </span>
+        </motion.span>
+      }
+      items={navItems}
+      activeHref=""
+      baseColor={isLight ? '#ffffff' : '#111827'}
+      pillColor={isLight ? '#111827' : '#f9fafb'}
+      pillTextColor={isLight ? '#ffffff' : '#111827'}
+      hoveredPillTextColor={isLight ? '#111827' : '#f9fafb'}
+      rightContent={<ThemeToggle />}
+    />
   )
 }
 
