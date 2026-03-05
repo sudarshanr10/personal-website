@@ -87,13 +87,17 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight"
             >
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-                {displayedName}
-                <span
-                  className={`inline-block w-1 md:w-1.5 h-[0.85em] bg-gradient-to-b from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 ml-1 align-middle ${
-                    showCursor ? 'opacity-100' : 'opacity-0'
-                  } transition-opacity duration-100`}
-                />
+              <span className="relative inline-block">
+                {/* Invisible placeholder holds full width so buttons never shift */}
+                <span className="invisible bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">{name}</span>
+                <span className="absolute inset-0 flex items-center justify-center md:justify-start bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
+                  {displayedName}
+                  <span
+                    className={`inline-block w-1 md:w-1.5 h-[0.85em] bg-gradient-to-b from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 ml-1 align-middle ${
+                      showCursor ? 'opacity-100' : 'opacity-0'
+                    } transition-opacity duration-100`}
+                  />
+                </span>
               </span>
             </motion.h1>
 
@@ -150,23 +154,17 @@ const Hero = () => {
 
           {/* Right: ProfileCard */}
           <motion.div
-            className="flex-shrink-0 hidden md:block"
+            className="flex-shrink-0"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <ProfileCard
               avatarUrl={PROFILE_PIC}
-              name="Sudarshan"
-              title="Software Engineer"
-              handle="sudarshanr10"
-              status=""
-              showUserInfo={true}
-              enableTilt={true}
-              enableMobileTilt={true}
-              behindGlowEnabled={false}
-              className=""
-              onContactClick={() => window.open('/resume.pdf', '_blank')}
+              name=""
+              title=""
+              showUserInfo={false}
+              behindGlowColor="rgba(99, 102, 241, 0.5)"
             />
           </motion.div>
         </div>

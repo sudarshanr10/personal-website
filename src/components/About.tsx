@@ -87,10 +87,14 @@ const About = () => {
           <div className="flex-shrink-0 mx-auto lg:mx-0" style={{ width: 280 }}>
             <ProfileCard
               avatarUrl={PROFILE_PIC}
-              name=""
-              title=""
-              showUserInfo={false}
-              behindGlowColor="rgba(99, 102, 241, 0.5)"
+              name="Sudarshan"
+              title="Software Engineer"
+              handle="sudarshanr10"
+              status=""
+              showUserInfo={true}
+              enableTilt={true}
+              enableMobileTilt={true}
+              behindGlowEnabled={false}
             />
           </div>
 
@@ -99,7 +103,7 @@ const About = () => {
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full" />
               <div className="pl-8 space-y-5">
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Hey, I'm Sudarshan, an aspiring software engineer who loves building things that actually work and solve real problems. I'm particularly interested in backend development, data engineering, and creating reliable systems.
+                  Hey, I'm Sudarshan, an aspiring software engineer who loves building things that actually work and solve real problems. I'm particularly interested in backend development and machine learning.
                 </p>
                 <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                   Outside of work, you'll probably find me playing soccer, gaming, experimenting in the kitchen, hitting the gym, or catching up on anime. I like keeping things balanced.
