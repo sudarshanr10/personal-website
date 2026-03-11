@@ -100,15 +100,10 @@ const Projects = () => {
   const activeData = categories.find(c => c.name === activeCategory)!
 
   return (
-    <section data-section="projects" className="py-32 px-4 bg-gray-50 dark:bg-gray-900/30 transition-colors duration-500 min-h-screen flex items-center relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/3 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/5 dark:bg-purple-500/3 rounded-full blur-3xl" />
-      </div>
+    <section data-section="projects" className="py-32 px-4 bg-transparent transition-colors duration-500 min-h-screen flex items-center relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
 
       <div className="max-w-6xl mx-auto relative z-10 w-full">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -127,7 +122,6 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Category tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -157,7 +151,6 @@ const Projects = () => {
           ))}
         </motion.div>
 
-        {/* Project cards for active category */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -178,7 +171,6 @@ const Projects = () => {
                 whileHover={{ y: -6, transition: { type: 'spring' as const, stiffness: 300 } }}
                 className="group relative"
               >
-                {/* Glow */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-5 rounded-2xl blur-xl transition-all duration-500`}
                 />
@@ -244,7 +236,7 @@ const Projects = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 dark:from-gray-900 to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
     </section>
   )
 }

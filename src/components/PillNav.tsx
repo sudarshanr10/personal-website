@@ -85,7 +85,7 @@ const PillNav = ({
 
         tlRefs.current[index]?.kill()
         const tl = gsap.timeline({ paused: true })
-        tl.to(circle, { scale: 1.2, xPercent: -50, duration: 2, ease, overwrite: 'auto' }, 0)
+        tl.to(circle, { scale: 2, xPercent: -50, duration: 2, ease, overwrite: 'auto' }, 0)
         if (label) tl.to(label, { y: -(h + 8), duration: 2, ease, overwrite: 'auto' }, 0)
         if (white) {
           gsap.set(white, { y: Math.ceil(h + 100), opacity: 0 })

@@ -7,6 +7,7 @@ export interface DockIconItem {
   href?: string
   target?: string
   bg: string
+  glowColor?: string
 }
 
 interface DockIconsProps {
@@ -43,24 +44,31 @@ const DockItem = ({
   const sizeSync = useTransform(d, [-distance, 0, distance], [baseSize, magnification, baseSize])
   const size = useSpring(sizeSync, { mass: 0.1, stiffness: 200, damping: 14 })
 
+  const glow = item.glowColor ?? 'rgba(99,102,241,0.5)'
+  const boxShadow = hovered
+    ? `0 8px 28px ${glow}, 0 0 0 1px rgba(255,255,255,0.12) inset`
+    : `0 4px 14px ${glow.replace(/[\d.]+\)$/, '0.25)')}, 0 0 0 1px rgba(255,255,255,0.08) inset`
+
   const content = (
     <motion.div
       ref={itemRef}
-      style={{ width: size, height: size, background: item.bg }}
+      style={{ width: size, height: size, background: item.bg, boxShadow, transition: 'box-shadow 0.25s ease' }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative flex items-center justify-center rounded-2xl shadow-md cursor-pointer select-none flex-shrink-0"
+      className="relative flex items-center justify-center rounded-2xl cursor-pointer select-none flex-shrink-0"
     >
       <AnimatePresence>
         {hovered && (
           <motion.span
-            className="absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap bg-gray-900 dark:bg-white text-white dark:text-gray-900 pointer-events-none shadow-lg"
-            initial={{ opacity: 0, y: 6, scale: 0.9 }}
+            className="absolute left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 pointer-events-none shadow-xl"
+            style={{ bottom: 'calc(100% + 10px)' }}
+            initial={{ opacity: 0, y: 4, scale: 0.88 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
+            exit={{ opacity: 0, y: 4, scale: 0.88 }}
+            transition={{ duration: 0.13 }}
           >
             {item.label}
+            <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-gray-900 dark:border-t-gray-100" />
           </motion.span>
         )}
       </AnimatePresence>

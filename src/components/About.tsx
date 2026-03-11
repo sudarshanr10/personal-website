@@ -69,11 +69,13 @@ const itemVariants = {
 
 const About = () => {
   return (
-    <section data-section="about" className="py-32 px-4 bg-gray-50 dark:bg-gray-950/50 transition-colors duration-500 min-h-screen flex items-center">
-      <div className="max-w-4xl mx-auto w-full">
+    <section data-section="about" className="py-32 px-4 bg-transparent transition-colors duration-500 min-h-screen flex items-center relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
 
-        {/* Section Header */}
-        <motion.div {...inView()} className="text-center mb-16">
+      <div className="max-w-4xl mx-auto w-full relative z-10">
+
+<motion.div {...inView()} className="text-center mb-16">
           <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400">
             ABOUT
           </div>
@@ -82,7 +84,6 @@ const About = () => {
           </h2>
         </motion.div>
 
-        {/* Profile Card + Bio */}
         <motion.div {...inView(0.05)} className="flex flex-col lg:flex-row gap-32 items-center mb-16">
           <div className="flex-shrink-0 mx-auto lg:mx-0" style={{ width: 280 }}>
             <ProfileCard
@@ -113,7 +114,6 @@ const About = () => {
           </div>
         </motion.div>
 
-        {/* Tech Stack Marquee */}
         <motion.div {...inView(0.1)} className="mb-24">
           <p className="text-xs font-mono text-gray-400 dark:text-gray-600 uppercase tracking-widest mb-4 text-center">Technologies</p>
           <div
@@ -139,7 +139,6 @@ const About = () => {
           </div>
         </motion.div>
 
-        {/* Education */}
         <motion.div {...inView(0.0)}>
           <div className="flex items-center mb-10">
             <motion.div
@@ -222,7 +221,6 @@ const About = () => {
           </motion.div>
         </motion.div>
 
-        {/* Experience */}
         <motion.div {...inView(0.0)} className="mt-24">
           <div className="flex items-center mb-10">
             <motion.div

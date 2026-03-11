@@ -1,71 +1,138 @@
 import { useState, useEffect, useRef } from 'react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import ProfileCard from './ProfileCard'
 import DockIcons from './DockIcons'
 
 const PROFILE_PIC = '/profpic.JPEG'
-const ROLES = ['Software Engineer', 'Data Engineer']
+const ROLES = ['Software Engineer', 'Rutgers CS Graduate']
 
-const Hero = () => {
-  const name = 'Sudarshan'
-  const [displayedName, setDisplayedName] = useState('')
-  const [showCursor, setShowCursor] = useState(true)
-  const [isTypingComplete, setIsTypingComplete] = useState(false)
-  const [roleIndex, setRoleIndex] = useState(0)
+// ── Name: types char-by-char, cursor fades out when done ─────────────────────
+const TypewriterName = ({
+  text,
+  onDone,
+}: {
+  text: string
+  onDone: () => void
+}) => {
+  const [displayed, setDisplayed] = useState('')
+  const [cursorOn, setCursorOn] = useState(true)
+  const [finished, setFinished] = useState(false)
+  const onDoneRef = useRef(onDone)
+  onDoneRef.current = onDone
 
-  const sectionRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const blurFilter = useTransform(scrollYProgress, [0.15, 0.7], ['blur(0px)', 'blur(10px)'])
-  const contentOpacity = useTransform(scrollYProgress, [0.2, 0.8], [1, 0])
+  // Type out characters
+  useEffect(() => {
+    let i = 0
+    const start = setTimeout(() => {
+      const tick = setInterval(() => {
+        i++
+        setDisplayed(text.slice(0, i))
+        if (i >= text.length) {
+          clearInterval(tick)
+          setTimeout(() => {
+            setFinished(true)
+            onDoneRef.current()
+          }, 480)
+        }
+      }, 82)
+      return () => clearInterval(tick)
+    }, 320)
+    return () => clearTimeout(start)
+  }, [text])
+
+  // Blink cursor while typing
+  useEffect(() => {
+    if (finished) return
+    const b = setInterval(() => setCursorOn(v => !v), 520)
+    return () => clearInterval(b)
+  }, [finished])
+
+  return (
+    <>
+      {displayed}
+      <span
+        aria-hidden
+        className="inline-block w-[3px] rounded-full ml-[3px] align-middle"
+        style={{
+          height: '0.78em',
+          background: 'linear-gradient(to bottom, #60a5fa, #a78bfa)',
+          boxShadow: '0 0 10px rgba(139,92,246,0.55)',
+          opacity: finished ? 0 : cursorOn ? 1 : 0,
+          transition: finished ? 'opacity 0.35s ease' : 'opacity 0.12s ease',
+        }}
+      />
+    </>
+  )
+}
+
+// ── Roles: typewriter cycle — type → pause → delete → next ───────────────────
+const TypewriterRoles = ({ roles, active }: { roles: string[]; active: boolean }) => {
+  const [text, setText] = useState('')
+  const [idx, setIdx] = useState(0)
+  const [phase, setPhase] = useState<'typing' | 'pause' | 'deleting'>('typing')
+  const [cursorOn, setCursorOn] = useState(true)
 
   useEffect(() => {
-    let currentIndex = 0
-    const typingInterval = setInterval(() => {
-      if (currentIndex < name.length) {
-        setDisplayedName(name.slice(0, currentIndex + 1))
-        currentIndex++
+    if (!active) return
+    const role = roles[idx]
+    let t: ReturnType<typeof setTimeout>
+
+    if (phase === 'typing') {
+      if (text.length < role.length) {
+        t = setTimeout(() => setText(role.slice(0, text.length + 1)), 68)
       } else {
-        setIsTypingComplete(true)
-        clearInterval(typingInterval)
+        t = setTimeout(() => setPhase('pause'), 2200)
       }
-    }, 150)
-    return () => clearInterval(typingInterval)
-  }, [])
-
-  useEffect(() => {
-    if (isTypingComplete) {
-      const cursorInterval = setInterval(() => setShowCursor(prev => !prev), 530)
-      return () => clearInterval(cursorInterval)
+    } else if (phase === 'pause') {
+      t = setTimeout(() => setPhase('deleting'), 60)
+    } else {
+      if (text.length > 0) {
+        t = setTimeout(() => setText(s => s.slice(0, -1)), 36)
+      } else {
+        setIdx(i => (i + 1) % roles.length)
+        setPhase('typing')
+      }
     }
-  }, [isTypingComplete])
+
+    return () => clearTimeout(t)
+  }, [text, phase, idx, active, roles])
 
   useEffect(() => {
-    const roleInterval = setInterval(() => {
-      setRoleIndex(prev => (prev + 1) % ROLES.length)
-    }, 2800)
-    return () => clearInterval(roleInterval)
+    const b = setInterval(() => setCursorOn(v => !v), 520)
+    return () => clearInterval(b)
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      data-section="home"
-      className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-gray-50 dark:bg-gray-950 transition-colors duration-500"
-    >
-      {/* Background blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-72 h-72 bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-3xl" />
-      </div>
+    <span className="font-mono text-base md:text-lg text-gray-500 dark:text-gray-400">
+      {/* reserve height so the row doesn't collapse before active */}
+      <span>{text || '\u00A0'}</span>
+      {active && (
+        <span
+          aria-hidden
+          className="inline-block w-[2px] rounded-full ml-[2px] align-middle bg-gray-400 dark:bg-gray-500"
+          style={{
+            height: '1em',
+            opacity: cursorOn ? 0.75 : 0,
+            transition: 'opacity 0.12s ease',
+          }}
+        />
+      )}
+    </span>
+  )
+}
 
-      {/* Content — blurs + fades as you scroll out */}
-      <motion.div
-        className="max-w-5xl mx-auto w-full relative z-10"
-        style={{ filter: blurFilter, opacity: contentOpacity }}
-      >
+// ── Hero ─────────────────────────────────────────────────────────────────────
+const Hero = () => {
+  const [rolesActive, setRolesActive] = useState(false)
+
+  return (
+    <section
+      data-section="home"
+      className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-transparent transition-colors duration-500"
+    >
+      <div className="max-w-5xl mx-auto w-full relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16 mb-12">
-          {/* Left: name + social */}
           <motion.div
             className="flex-1 text-center md:text-left"
             initial={{ opacity: 0, x: -30 }}
@@ -87,34 +154,14 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight"
             >
-              <span className="relative inline-block">
-                {/* Invisible placeholder holds full width so buttons never shift */}
-                <span className="invisible bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">{name}</span>
-                <span className="absolute inset-0 flex items-center justify-center md:justify-start bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-                  {displayedName}
-                  <span
-                    className={`inline-block w-1 md:w-1.5 h-[0.85em] bg-gradient-to-b from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 ml-1 align-middle ${
-                      showCursor ? 'opacity-100' : 'opacity-0'
-                    } transition-opacity duration-100`}
-                  />
-                </span>
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
+                <TypewriterName text="Sudarshan" onDone={() => setRolesActive(true)} />
               </span>
             </motion.h1>
 
-            {/* Cycling role */}
-            <div className="h-8 mb-8 overflow-hidden flex items-center justify-center md:justify-start">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roleIndex}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: 'easeInOut' }}
-                  className="text-base md:text-lg text-gray-500 dark:text-gray-400 font-mono"
-                >
-                  {ROLES[roleIndex]}
-                </motion.span>
-              </AnimatePresence>
+            {/* Fixed height so layout never shifts */}
+            <div className="h-8 mb-8 flex items-center justify-center md:justify-start">
+              <TypewriterRoles roles={ROLES} active={rolesActive} />
             </div>
 
             <motion.div
@@ -130,20 +177,23 @@ const Hero = () => {
                   {
                     icon: <FaEnvelope size={20} />,
                     label: 'Email',
-                    bg: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    bg: 'linear-gradient(135deg, #ec4899, #f43f5e)',
+                    glowColor: 'rgba(244,63,94,0.5)',
                     href: 'mailto:sudarshan86.ramesh@gmail.com',
                   },
                   {
                     icon: <FaGithub size={20} />,
                     label: 'GitHub',
-                    bg: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+                    bg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    glowColor: 'rgba(99,102,241,0.5)',
                     href: 'https://github.com/sudarshanr10',
                     target: '_blank',
                   },
                   {
                     icon: <FaLinkedin size={20} />,
                     label: 'LinkedIn',
-                    bg: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                    bg: 'linear-gradient(135deg, #38bdf8, #0ea5e9)',
+                    glowColor: 'rgba(14,165,233,0.5)',
                     href: 'https://www.linkedin.com/in/sudarshan-ramesh-424386204/',
                     target: '_blank',
                   },
@@ -152,7 +202,6 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right: ProfileCard */}
           <motion.div
             className="flex-shrink-0"
             initial={{ opacity: 0, x: 30 }}
@@ -168,10 +217,9 @@ const Hero = () => {
             />
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 dark:from-gray-950 to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
     </section>
   )
 }
