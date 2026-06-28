@@ -1,222 +1,241 @@
-import { useState, useEffect, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
-import { motion } from 'framer-motion'
-import ProfileCard from './ProfileCard'
-import DockIcons from './DockIcons'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
-const PROFILE_PIC = '/profpic.JPEG'
-const ROLES = ['Software Engineer', 'Rutgers CS Graduate']
-
-// ── Name: types char-by-char, cursor fades out when done ─────────────────────
-const TypewriterName = ({
-  text,
-  onDone,
-}: {
-  text: string
-  onDone: () => void
-}) => {
-  const [displayed, setDisplayed] = useState('')
-  const [cursorOn, setCursorOn] = useState(true)
-  const [finished, setFinished] = useState(false)
-  const onDoneRef = useRef(onDone)
-  onDoneRef.current = onDone
-
-  // Type out characters
-  useEffect(() => {
-    let i = 0
-    const start = setTimeout(() => {
-      const tick = setInterval(() => {
-        i++
-        setDisplayed(text.slice(0, i))
-        if (i >= text.length) {
-          clearInterval(tick)
-          setTimeout(() => {
-            setFinished(true)
-            onDoneRef.current()
-          }, 480)
-        }
-      }, 82)
-      return () => clearInterval(tick)
-    }, 320)
-    return () => clearTimeout(start)
-  }, [text])
-
-  // Blink cursor while typing
-  useEffect(() => {
-    if (finished) return
-    const b = setInterval(() => setCursorOn(v => !v), 520)
-    return () => clearInterval(b)
-  }, [finished])
-
-  return (
-    <>
-      {displayed}
-      <span
-        aria-hidden
-        className="inline-block w-[3px] rounded-full ml-[3px] align-middle"
-        style={{
-          height: '0.78em',
-          background: 'linear-gradient(to bottom, #60a5fa, #a78bfa)',
-          boxShadow: '0 0 10px rgba(139,92,246,0.55)',
-          opacity: finished ? 0 : cursorOn ? 1 : 0,
-          transition: finished ? 'opacity 0.35s ease' : 'opacity 0.12s ease',
-        }}
-      />
-    </>
-  )
-}
-
-// ── Roles: typewriter cycle — type → pause → delete → next ───────────────────
-const TypewriterRoles = ({ roles, active }: { roles: string[]; active: boolean }) => {
-  const [text, setText] = useState('')
-  const [idx, setIdx] = useState(0)
-  const [phase, setPhase] = useState<'typing' | 'pause' | 'deleting'>('typing')
-  const [cursorOn, setCursorOn] = useState(true)
-
-  useEffect(() => {
-    if (!active) return
-    const role = roles[idx]
-    let t: ReturnType<typeof setTimeout>
-
-    if (phase === 'typing') {
-      if (text.length < role.length) {
-        t = setTimeout(() => setText(role.slice(0, text.length + 1)), 68)
-      } else {
-        t = setTimeout(() => setPhase('pause'), 2200)
-      }
-    } else if (phase === 'pause') {
-      t = setTimeout(() => setPhase('deleting'), 60)
-    } else {
-      if (text.length > 0) {
-        t = setTimeout(() => setText(s => s.slice(0, -1)), 36)
-      } else {
-        setIdx(i => (i + 1) % roles.length)
-        setPhase('typing')
-      }
-    }
-
-    return () => clearTimeout(t)
-  }, [text, phase, idx, active, roles])
-
-  useEffect(() => {
-    const b = setInterval(() => setCursorOn(v => !v), 520)
-    return () => clearInterval(b)
-  }, [])
-
-  return (
-    <span className="font-mono text-base md:text-lg text-gray-500 dark:text-gray-400">
-      {/* reserve height so the row doesn't collapse before active */}
-      <span>{text || '\u00A0'}</span>
-      {active && (
-        <span
-          aria-hidden
-          className="inline-block w-[2px] rounded-full ml-[2px] align-middle bg-gray-400 dark:bg-gray-500"
-          style={{
-            height: '1em',
-            opacity: cursorOn ? 0.75 : 0,
-            transition: 'opacity 0.12s ease',
-          }}
-        />
-      )}
-    </span>
-  )
-}
-
-// ── Hero ─────────────────────────────────────────────────────────────────────
 const Hero = () => {
-  const [rolesActive, setRolesActive] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0, active: false })
+
+  // Spring-driven values for 3D photo tilt
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const rotateX = useSpring(useTransform(rawY, [-400, 400], [8, -8]), { stiffness: 120, damping: 22 })
+  const rotateY = useSpring(useTransform(rawX, [-400, 400], [-8, 8]), { stiffness: 120, damping: 22 })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect()
+    if (!rect) return
+    rawX.set(e.clientX - rect.left - rect.width / 2)
+    rawY.set(e.clientY - rect.top - rect.height / 2)
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top, active: true })
+  }
+
+  const handleMouseLeave = () => {
+    rawX.set(0)
+    rawY.set(0)
+    setMousePos(m => ({ ...m, active: false }))
+  }
 
   return (
     <section
+      ref={heroRef}
       data-section="home"
-      className="min-h-screen flex flex-col items-center justify-center pt-20 px-4 relative overflow-hidden bg-transparent transition-colors duration-500"
+      className="min-h-screen flex items-center justify-center px-4 pt-20 pb-12 relative overflow-hidden bg-transparent"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-5xl mx-auto w-full relative z-10">
-        <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-16 mb-12">
+      <style>{`
+        @keyframes name-gradient {
+          0%, 100% { background-position: 0% center; }
+          50%       { background-position: 100% center; }
+        }
+        @keyframes ring-cw  { to { transform: rotate(360deg);  } }
+        @keyframes ring-ccw { to { transform: rotate(-360deg); } }
+        .ring-cw  { animation: ring-cw  22s linear infinite; }
+        .ring-ccw { animation: ring-ccw 14s linear infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .ring-cw, .ring-ccw { animation-play-state: paused; }
+        }
+      `}</style>
+
+      {/* Centered aurora */}
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+        <div style={{
+          width: '110%', height: '80%',
+          background: 'radial-gradient(ellipse at 50% 45%, rgba(99,102,241,0.13) 0%, rgba(139,92,246,0.07) 40%, transparent 68%)',
+          filter: 'blur(72px)',
+        }} />
+      </div>
+
+      {/* Dot grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(99,102,241,0.09) 1px, transparent 0)',
+        backgroundSize: '30px 30px',
+        maskImage: 'radial-gradient(ellipse 68% 68% at 50% 50%, black 20%, transparent 100%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 68% 68% at 50% 50%, black 20%, transparent 100%)',
+      }} />
+
+      {/* Cursor spotlight */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        opacity: mousePos.active ? 1 : 0,
+        transition: 'opacity 0.55s ease',
+        background: `radial-gradient(420px circle at ${mousePos.x}px ${mousePos.y}px, rgba(99,102,241,0.08), transparent 55%)`,
+      }} />
+
+      <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto w-full">
+
+        {/* Photo: entrance scale → 3D tilt + dual spinning rings */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, scale: 0.82 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.55, ease: 'easeOut' }}
+          style={{ perspective: '900px' }}
+        >
           <motion.div
-            className="flex-1 text-center md:text-left"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            className="relative"
+            style={{ rotateX, rotateY }}
           >
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-lg text-gray-600 dark:text-gray-400 mb-3 font-mono"
-            >
-              Hi, my name is
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight"
-            >
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-                <TypewriterName text="Sudarshan" onDone={() => setRolesActive(true)} />
-              </span>
-            </motion.h1>
-
-            {/* Fixed height so layout never shifts */}
-            <div className="h-8 mb-8 flex items-center justify-center md:justify-start">
-              <TypewriterRoles roles={ROLES} active={rolesActive} />
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.35 }}
-            >
-              <DockIcons
-                baseSize={48}
-                magnification={72}
-                distance={120}
-                items={[
-                  {
-                    icon: <FaEnvelope size={20} />,
-                    label: 'Email',
-                    bg: 'linear-gradient(135deg, #ec4899, #f43f5e)',
-                    glowColor: 'rgba(244,63,94,0.5)',
-                    href: 'mailto:sudarshan86.ramesh@gmail.com',
-                  },
-                  {
-                    icon: <FaGithub size={20} />,
-                    label: 'GitHub',
-                    bg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                    glowColor: 'rgba(99,102,241,0.5)',
-                    href: 'https://github.com/sudarshanr10',
-                    target: '_blank',
-                  },
-                  {
-                    icon: <FaLinkedin size={20} />,
-                    label: 'LinkedIn',
-                    bg: 'linear-gradient(135deg, #38bdf8, #0ea5e9)',
-                    glowColor: 'rgba(14,165,233,0.5)',
-                    href: 'https://www.linkedin.com/in/sudarshan-ramesh-424386204/',
-                    target: '_blank',
-                  },
-                ]}
-              />
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="flex-shrink-0"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <ProfileCard
-              avatarUrl={PROFILE_PIC}
-              name=""
-              title=""
-              showUserInfo={false}
-              behindGlowColor="rgba(99, 102, 241, 0.5)"
+            {/* Outer CW dashed ring */}
+            <div
+              className="ring-cw absolute rounded-full pointer-events-none"
+              style={{ inset: -26, border: '1px dashed rgba(99,102,241,0.38)' }}
             />
+
+            {/* Inner CCW solid ring */}
+            <div
+              className="ring-ccw absolute rounded-full pointer-events-none"
+              style={{ inset: -12, border: '1px solid rgba(168,85,247,0.32)' }}
+            />
+
+            {/* Pulsing glow */}
+            <motion.div
+              className="absolute rounded-full pointer-events-none"
+              style={{
+                inset: '-16px',
+                background: 'radial-gradient(circle, rgba(99,102,241,0.35) 0%, rgba(167,139,250,0.15) 55%, transparent 75%)',
+                filter: 'blur(16px)',
+              }}
+              animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.06, 1] }}
+              transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
+            />
+
+            {/* Gradient ring border + photo */}
+            <div
+              className="relative rounded-full p-[2.5px]"
+              style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 55%, #f472b6 100%)' }}
+            >
+              <img
+                src="/profpic.JPEG"
+                alt="Sudarshan"
+                className="w-28 h-28 rounded-full object-cover object-top block"
+              />
+            </div>
           </motion.div>
+        </motion.div>
+
+        {/* Descriptor */}
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.08 }}
+          className="font-mono text-xs text-indigo-400 dark:text-indigo-500 tracking-widest uppercase mb-3 select-none"
+        >
+          software engineer
+        </motion.p>
+
+        {/* Name — slide-up reveal + flowing gradient */}
+        <div style={{ overflow: 'hidden' }} className="mb-5">
+          <motion.h1
+            initial={{ y: '105%' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.14 }}
+            className="text-[2.8rem] sm:text-[4.2rem] md:text-[5.8rem] lg:text-[7rem] font-black tracking-tighter leading-[0.88] select-none"
+            style={{
+              background: 'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #8b5cf6, #3b82f6)',
+              backgroundSize: '300% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              animation: 'name-gradient 7s ease infinite',
+            }}
+          >
+            Sudarshan
+          </motion.h1>
         </div>
+
+        {/* Gradient rule */}
+        <motion.div
+          className="rounded-full mb-10"
+          style={{
+            height: '1px',
+            width: '96px',
+            background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.55), rgba(99,102,241,0.55), transparent)',
+          }}
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.55, delay: 0.3 }}
+        />
+
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.42 }}
+          className="flex flex-wrap justify-center gap-3"
+        >
+          <motion.a
+            href="mailto:sudarshan86.ramesh@gmail.com"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="group relative inline-flex items-center gap-2 px-7 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold rounded-xl overflow-hidden transition-colors duration-200 hover:border-transparent hover:text-white"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            <span className="relative flex items-center gap-2">
+              <FaEnvelope size={13} />
+              Email Me
+            </span>
+          </motion.a>
+
+          <motion.a
+            href="https://github.com/sudarshanr10"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="group relative inline-flex items-center gap-2 px-7 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold rounded-xl overflow-hidden transition-colors duration-200 hover:border-transparent"
+          >
+            <span className="absolute inset-0 bg-gray-900 dark:bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            <span className="relative flex items-center gap-2 group-hover:text-white dark:group-hover:text-gray-900 transition-colors duration-200">
+              <FaGithub size={14} />
+              GitHub
+            </span>
+          </motion.a>
+
+          <motion.a
+            href="https://www.linkedin.com/in/sudarshan-ramesh-424386204/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="group relative inline-flex items-center gap-2 px-7 py-3 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold rounded-xl overflow-hidden transition-colors duration-200 hover:border-transparent hover:text-white"
+          >
+            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ background: '#0077b5' }} />
+            <span className="relative flex items-center gap-2">
+              <FaLinkedin size={14} />
+              LinkedIn
+            </span>
+          </motion.a>
+        </motion.div>
+
+        {/* Scroll hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.62 }}
+          className="mt-16 flex flex-col items-center gap-2"
+        >
+          <span className="text-[9px] font-mono tracking-[0.35em] uppercase text-gray-300 dark:text-gray-700">
+            scroll
+          </span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+            className="w-px h-8 rounded-full"
+            style={{ background: 'linear-gradient(to bottom, rgba(99,102,241,0.5), transparent)' }}
+          />
+        </motion.div>
+
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />

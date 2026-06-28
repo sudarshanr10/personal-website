@@ -61,6 +61,11 @@ function App() {
       <Hero />
       <About />
       <Projects />
+      <footer className="relative z-10 py-8 text-center border-t border-gray-100 dark:border-gray-800">
+        <p className="text-sm font-mono text-gray-400 dark:text-gray-600">
+          © 2026 Sudarshan · Built with React
+        </p>
+      </footer>
     </div>
   )
 }

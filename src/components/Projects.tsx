@@ -111,15 +111,12 @@ const Projects = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400 hover:scale-105 transition-transform">
-            PROJECTS
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white tracking-tight">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Check out some of my recent work and side projects
+          <p className="text-xs font-mono tracking-[0.3em] text-blue-500 dark:text-blue-400 uppercase mb-3">
+            — what i've built —
           </p>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white">
+            Featured <span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">Projects</span>
+          </h2>
         </motion.div>
 
         <motion.div

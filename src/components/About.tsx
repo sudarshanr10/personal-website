@@ -1,16 +1,15 @@
-import React from 'react'
-import { FaGraduationCap, FaBriefcase, FaDatabase, FaJava } from 'react-icons/fa'
+import React, { useState } from 'react'
+import ProfileCard from './ProfileCard'
+import { FaDatabase, FaJava, FaChevronDown, FaGraduationCap, FaBriefcase } from 'react-icons/fa'
 import {
   SiPython, SiJavascript, SiR, SiHtml5, SiCss3, SiCsharp,
   SiC, SiReact, SiFastapi, SiSpringboot, SiSnowflake, SiDbt, SiPostman,
   SiDocker, SiKubernetes, SiTerraform, SiPostgresql, SiAndroidstudio,
   SiGit, SiFlask, SiTensorflow, SiPytorch, SiJunit5, SiPandas, SiNumpy, SiLinux,
 } from 'react-icons/si'
-import { motion } from 'framer-motion'
-import ProfileCard from './ProfileCard'
-import SpotlightCard from './SpotlightCard'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const PROFILE_PIC = '/profpic.JPEG'
+const PROFILE_PIC = '/nycpic.JPG'
 
 const TECH_STACK: { icon: React.ReactNode; label: string }[] = [
   { icon: <SiPython style={{ color: '#3776AB' }} />, label: 'Python' },
@@ -43,31 +42,141 @@ const TECH_STACK: { icon: React.ReactNode; label: string }[] = [
   { icon: <SiLinux style={{ color: '#FCC624' }} />, label: 'Linux' },
 ]
 
-const inView = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.5, delay },
+  viewport: { once: true, margin: '-40px' },
+  transition: { duration: 0.45, delay },
 })
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
-}
+const SectionTitle = ({ title, icon, accent }: { title: string; icon: React.ReactNode; accent: string }) => (
+  <div className="mb-10 group cursor-default">
+    <h3 className="flex items-center gap-3 text-4xl font-bold tracking-tighter text-gray-900 dark:text-white">
+      <motion.span
+        whileHover={{ rotate: 14, scale: 1.2 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 12 }}
+        className="flex-shrink-0"
+      >
+        {icon}
+      </motion.span>
+      <motion.span whileHover={{ x: 2 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+        {title}
+      </motion.span>
+    </h3>
+    <div className={`mt-2 h-px rounded-full bg-gradient-to-r ${accent} w-10 group-hover:w-20 transition-all duration-300`} />
+  </div>
+)
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring' as const, stiffness: 100, damping: 15 },
+const CourseworkToggle = ({ courses, open, onToggle }: {
+  courses: string[]
+  open: boolean
+  onToggle: () => void
+}) => (
+  <div className="mt-3">
+    <button
+      onClick={onToggle}
+      className="flex items-center gap-1.5 text-xs font-medium text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+    >
+      <span>Relevant Coursework</span>
+      <motion.span
+        animate={{ rotate: open ? 180 : 0 }}
+        transition={{ duration: 0.22, ease: 'easeInOut' }}
+        style={{ display: 'flex' }}
+      >
+        <FaChevronDown size={9} />
+      </motion.span>
+    </button>
+    <AnimatePresence initial={false}>
+      {open && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+          className="overflow-hidden"
+        >
+          <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {courses.map((course) => (
+              <span
+                key={course}
+                className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 text-xs rounded-md border border-gray-200 dark:border-gray-700/60"
+              >
+                {course}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+)
+
+const EDUCATION = [
+  {
+    school: 'Rutgers, The State University of New Jersey — New Brunswick',
+    degree: 'B.S. Computer Science',
+    years: '2022 – 2026',
+    badge: { label: 'Summa Cum Laude', className: 'bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40' },
+    courses: ['Principles of Information & Data Management', 'Data Structures', 'Data Management', 'Linear Algebra', 'Data Science', 'Artificial Intelligence', 'Computer Security', 'Internet Technology', 'Discrete Structures', 'Computer Architecture', 'Computer Algorithms'],
+    primary: true,
   },
-}
+  {
+    school: 'South Brunswick High School',
+    degree: 'High School Diploma',
+    years: '2018 – 2022',
+    badge: null,
+    courses: ['Mobile App Development', 'VR & Game Development', 'Data Structures', 'AP Computer Science Principles', 'AP Computer Science A'],
+    primary: false,
+  },
+]
+
+const EXPERIENCE = [
+  {
+    company: 'Collins Aerospace',
+    position: 'Software Engineer I',
+    duration: 'May 2026 – Present',
+    description: 'Solipsys Corporation: Mission Systems - Command & Control (C2)',
+    technologies: ['Java', 'Maven', 'Git', 'Linux', 'Bash', 'Jira', 'Confluence', 'Crucible', 'Jenkins', 'Samba'],
+    current: true,
+  },
+  {
+    company: 'SWBC',
+    position: 'Data Engineer Intern',
+    duration: 'Jun 2025 – Apr 2026',
+    description: 'EDW-Infra team: ELT pipelines & anomaly detection',
+    technologies: ['SQL', 'Snowflake', 'dbt', 'SQL Server', 'Azure DevOps Server', 'Snowflake ML', 'CRON'],
+    current: false,
+  },
+  {
+    company: 'Ephanti',
+    position: 'Software Engineer Intern',
+    duration: 'Jun 2024 – Aug 2024',
+    description: 'Backend service for chatbot agent: code generation, execution & RAG pipeline',
+    technologies: ['Python', 'PostgreSQL', 'Docker', 'Postman', 'OpenAI API', 'PGVector', 'DBeaver', 'LlamaIndex', 'Jira'],
+    current: false,
+  },
+  {
+    company: 'Code Ninjas',
+    position: 'Code Instructor',
+    duration: 'Aug 2021 – Jan 2022',
+    description: 'Tutored kids in Computer Science fundamentals',
+    technologies: ['JavaScript', 'C#', 'Unity'],
+    current: false,
+  },
+  {
+    company: 'Traform',
+    position: 'Software Engineer Intern',
+    duration: 'Jul 2021 – Dec 2021',
+    description: 'Mobile platform team',
+    technologies: ['JavaScript', 'React Native', 'TailwindCSS'],
+    current: false,
+  },
+]
 
 const About = () => {
+  const [rutgersOpen, setRutgersOpen] = useState(false)
+  const [highSchoolOpen, setHighSchoolOpen] = useState(false)
+
   return (
     <section data-section="about" className="py-32 px-4 bg-transparent transition-colors duration-500 min-h-screen flex items-center relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none z-20" />
@@ -75,36 +184,37 @@ const About = () => {
 
       <div className="max-w-4xl mx-auto w-full relative z-10">
 
-<motion.div {...inView()} className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-mono text-gray-600 dark:text-gray-400">
-            ABOUT
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white tracking-tight">
-            About Me
+        {/* Title */}
+        <motion.div {...fadeUp()} className="text-center mb-16">
+          <p className="text-xs font-mono tracking-[0.3em] text-blue-500 dark:text-blue-400 uppercase mb-3">
+            — who i am —
+          </p>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white">
+            About <span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">Me</span>
           </h2>
         </motion.div>
 
-        <motion.div {...inView(0.05)} className="flex flex-col lg:flex-row gap-32 items-center mb-16">
-          <div className="flex-shrink-0 mx-auto lg:mx-0" style={{ width: 280 }}>
+        {/* Bio */}
+        <motion.div {...fadeUp(0.05)} className="flex flex-col lg:flex-row gap-12 items-center mb-16">
+          <div className="flex-shrink-0 mx-auto lg:mx-0">
             <ProfileCard
               avatarUrl={PROFILE_PIC}
+              miniAvatarUrl={PROFILE_PIC}
               name="Sudarshan"
               title="Software Engineer"
               handle="sudarshanr10"
-              status=""
-              showUserInfo={true}
-              enableTilt={true}
-              enableMobileTilt={true}
-              behindGlowEnabled={false}
+              status="Collins Aerospace"
+              behindGlowEnabled
+              behindGlowColor="rgba(99, 102, 241, 0.45)"
+              onContactClick={() => window.open('mailto:sudarshan86.ramesh@gmail.com')}
             />
           </div>
-
           <div className="flex-1">
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full" />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
               <div className="pl-8 space-y-5">
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Hey, I'm Sudarshan, an aspiring software engineer who loves building things that actually work and solve real problems. I'm particularly interested in backend development and machine learning.
+                  Hey, I'm Sudarshan, a software engineer at Collins Aerospace who loves building things that actually work and solve real problems. I'm particularly interested in backend development and machine learning.
                 </p>
                 <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                   Outside of work, you'll probably find me playing soccer, gaming, experimenting in the kitchen, hitting the gym, or catching up on anime. I like keeping things balanced.
@@ -114,7 +224,8 @@ const About = () => {
           </div>
         </motion.div>
 
-        <motion.div {...inView(0.1)} className="mb-24">
+        {/* Tech carousel */}
+        <motion.div {...fadeUp(0.1)} className="mb-24">
           <p className="text-xs font-mono text-gray-400 dark:text-gray-600 uppercase tracking-widest mb-4 text-center">Technologies</p>
           <div
             className="overflow-hidden w-full"
@@ -132,172 +243,99 @@ const About = () => {
                   style={{ minWidth: 64 }}
                 >
                   <span className="text-2xl">{tech.icon}</span>
-                  <span className="text-xs font-mono text-gray-500 dark:text-gray-500">{tech.label}</span>
                 </div>
               ))}
             </motion.div>
           </div>
         </motion.div>
 
-        <motion.div {...inView(0.0)}>
-          <div className="flex items-center mb-10">
-            <motion.div
-              className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-xl flex items-center justify-center mr-4 shadow-lg"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ type: 'spring' as const, stiffness: 300 }}
-            >
-              <FaGraduationCap className="text-white" size={28} />
-            </motion.div>
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Education</h3>
+        {/* ── Education ───────────────────────────── */}
+        <motion.div {...fadeUp(0.0)}>
+          <SectionTitle title="Education" icon={<FaGraduationCap size={22} className="text-blue-500 dark:text-blue-400" />} accent="from-blue-500 to-purple-500" />
+
+          <div className="relative">
+            <div className="absolute left-[5px] top-2 bottom-4 w-px bg-gray-200 dark:bg-gray-800" />
+            <div className="space-y-10">
+              {EDUCATION.map((edu, i) => (
+                <motion.div key={edu.school} {...fadeUp(i * 0.08)} className="relative pl-8">
+                  <div className={`absolute left-0 top-[5px] w-[11px] h-[11px] rounded-full bg-white dark:bg-gray-950 border-2 ${edu.primary ? 'border-blue-400 dark:border-blue-500' : 'border-gray-300 dark:border-gray-600'}`} />
+                  <div className="flex items-start justify-between gap-4 mb-1">
+                    <h4 className="font-semibold text-gray-900 dark:text-white leading-snug">{edu.school}</h4>
+                    <span className="font-mono text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap flex-shrink-0 mt-0.5">{edu.years}</span>
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm font-medium text-blue-600 dark:text-blue-400">{edu.degree}</p>
+                    {edu.badge && (
+                      <span className={`px-2 py-0.5 text-xs font-medium rounded-md border ${edu.badge.className}`}>
+                        {edu.badge.label}
+                      </span>
+                    )}
+                  </div>
+                  <CourseworkToggle
+                    courses={edu.courses}
+                    open={i === 0 ? rutgersOpen : highSchoolOpen}
+                    onToggle={() => i === 0 ? setRutgersOpen(v => !v) : setHighSchoolOpen(v => !v)}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
-
-          <motion.div
-            className="space-y-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-          >
-            <motion.div variants={itemVariants}>
-              <SpotlightCard
-                spotlightColor="rgba(99, 102, 241, 0.12)"
-                className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-200 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 shadow-sm hover:shadow-lg"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      Rutgers, The State University of New Jersey - New Brunswick
-                    </h4>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium text-lg">
-                      Bachelor of Science in Computer Science
-                    </p>
-                  </div>
-                  <div className="mt-2 md:mt-0 md:text-right">
-                    <p className="text-gray-500 dark:text-gray-400 font-mono text-sm">2022 - 2026</p>
-                    <span className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs font-semibold rounded-full">
-                      Summa Cum Laude
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Relevant Coursework</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Principles of Information & Data Management', 'Data Structures', 'Data Management', 'Linear Algebra', 'Data Science', 'Artificial Intelligence', 'Computer Security', 'Internet Technology', 'Discrete Structures', 'Computer Architecture', 'Computer Algorithms'].map((course) => (
-                      <span key={course} className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm rounded-lg border border-gray-200 dark:border-gray-700">
-                        {course}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </SpotlightCard>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <SpotlightCard
-                spotlightColor="rgba(99, 102, 241, 0.12)"
-                className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-200 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 shadow-sm hover:shadow-lg"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      South Brunswick High School
-                    </h4>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium text-lg">High School Diploma</p>
-                  </div>
-                  <p className="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 md:mt-0">2018 - 2022</p>
-                </div>
-                <div className="mt-4">
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Relevant Coursework</p>
-                  <div className="flex flex-wrap gap-2">
-                    {['Mobile App Development', 'VR & Game Development', 'Data Structures', 'AP Computer Science Principles', 'AP Computer Science A'].map((course) => (
-                      <span key={course} className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm rounded-lg border border-gray-200 dark:border-gray-700">
-                        {course}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </SpotlightCard>
-            </motion.div>
-          </motion.div>
         </motion.div>
 
-        <motion.div {...inView(0.0)} className="mt-24">
-          <div className="flex items-center mb-10">
-            <motion.div
-              className="w-14 h-14 bg-gradient-to-br from-green-600 to-teal-600 dark:from-green-500 dark:to-teal-500 rounded-xl flex items-center justify-center mr-4 shadow-lg"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ type: 'spring' as const, stiffness: 300 }}
-            >
-              <FaBriefcase className="text-white" size={26} />
-            </motion.div>
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Experience</h3>
-          </div>
+        {/* ── Experience ──────────────────────────── */}
+        <motion.div {...fadeUp(0.0)} className="mt-24">
+          <SectionTitle title="Experience" icon={<FaBriefcase size={20} className="text-green-500 dark:text-green-400" />} accent="from-green-500 to-teal-500" />
 
-          <motion.div
-            className="space-y-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-          >
-            {[
-              {
-                company: 'SWBC',
-                position: 'Data Engineer Intern',
-                duration: 'Jun 2025 - Present',
-                description: 'EDW-Infra team: ELT pipelines & anomaly detection',
-                technologies: ['SQL', 'Snowflake', 'dbt', 'SQL Server', 'Azure DevOps Server', 'Snowflake ML', 'CRON'],
-              },
-              {
-                company: 'Ephanti',
-                position: 'Software Engineer Intern',
-                duration: 'Jun 2024 - Aug 2024',
-                description: 'Backend service for chatbot agent: code generation, execution & RAG pipeline',
-                technologies: ['Python', 'PostgreSQL', 'Docker', 'Postman', 'OpenAI API', 'PGVector', 'DBeaver', 'LlamaIndex', 'Jira'],
-              },
-              {
-                company: 'Code Ninjas',
-                position: 'Code Instructor',
-                duration: 'Aug 2021 - Jan 2022',
-                description: 'Tutored kids in Computer Science fundamentals',
-                technologies: ['JavaScript', 'C#', 'Unity'],
-              },
-              {
-                company: 'Traform',
-                position: 'Software Engineer Intern',
-                duration: 'Jul 2021 - Dec 2021',
-                description: 'Mobile platform team',
-                technologies: ['JavaScript', 'React Native', 'TailwindCSS'],
-              },
-            ].map((exp) => (
-              <motion.div key={exp.company} variants={itemVariants}>
-                <SpotlightCard
-                  spotlightColor="rgba(16, 185, 129, 0.12)"
-                  className="group bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-green-400 dark:hover:border-green-500 transition-all duration-300 shadow-sm hover:shadow-lg"
-                >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-                    <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                        {exp.company}
-                      </h4>
-                      <p className="text-green-600 dark:text-green-400 font-medium">{exp.position}</p>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">{exp.description}</p>
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        {exp.technologies.map((tech) => (
-                          <span key={tech} className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-lg font-mono border border-gray-200 dark:border-gray-700">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-500 dark:text-gray-400 font-mono text-sm mt-2 md:mt-0 md:ml-4 whitespace-nowrap">
-                      {exp.duration}
-                    </p>
+          <div className="relative">
+            <div className="absolute left-[5px] top-2 bottom-4 w-px bg-gray-200 dark:bg-gray-800" />
+            <div className="space-y-10">
+              {EXPERIENCE.map((exp, i) => (
+                <motion.div key={exp.company} {...fadeUp(i * 0.07)} className="relative pl-8">
+                  {/* Node */}
+                  <div className="absolute left-0 top-[5px]">
+                    {exp.current ? (
+                      <span className="relative flex h-[11px] w-[11px]">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40" />
+                        <span className="relative inline-flex items-center justify-center rounded-full h-[11px] w-[11px] bg-white dark:bg-gray-950 border-2 border-green-400 dark:border-green-500">
+                          <span className="w-[4px] h-[4px] rounded-full bg-green-500" />
+                        </span>
+                      </span>
+                    ) : (
+                      <div className="w-[11px] h-[11px] rounded-full bg-white dark:bg-gray-950 border-2 border-gray-300 dark:border-gray-600" />
+                    )}
                   </div>
-                </SpotlightCard>
-              </motion.div>
-            ))}
-          </motion.div>
+
+                  <div className="flex items-start justify-between gap-4 mb-0.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="font-semibold text-gray-900 dark:text-white">{exp.company}</h4>
+                      {exp.current && (
+                        <span className="px-2 py-0.5 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-medium rounded-md border border-green-200 dark:border-green-800/40">
+                          Current
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-mono text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap flex-shrink-0 mt-0.5">
+                      {exp.duration}
+                    </span>
+                  </div>
+
+                  <p className="text-sm font-medium text-green-600 dark:text-green-400 mb-1">{exp.position}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{exp.description}</p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 text-xs rounded-md font-mono border border-gray-200 dark:border-gray-700/60"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
       </div>
